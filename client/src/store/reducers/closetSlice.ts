@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { EquipCategory, Equip } from "../storeTypes"
 
-interface ClosetState {
+export interface ClosetState {
     category: EquipCategory,
     equipsDisplayed: Equip[]
 }
