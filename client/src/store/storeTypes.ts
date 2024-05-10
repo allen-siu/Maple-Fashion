@@ -19,3 +19,19 @@ export interface Equip {
     itemId: number,
     icon?: string
 }
+
+export enum Skin {
+    LIGHT = "light",
+    ASHEN = "ashen",
+    PALE_PINK = "palePink",
+    TANNED = "tanned",
+    PALE = "pale",
+    GREEN = "green",
+    GHOSTLY = "ghostly",
+    DARK = "dark",
+    CLAY = "clay",
+    WHITE = "white",
+    MERCEDES = "mercedes",
+    SOFT_PETAL = "softPetal",
+    BLUSHING_PETAL = "blushingPetal"
+}

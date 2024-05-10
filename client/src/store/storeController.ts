@@ -2,6 +2,7 @@
 import axios from "axios"
 import { Equip, EquipCategory } from "./storeTypes";
 import { ClosetState } from "./reducers/closetSlice";
+import { AvatarState } from "./reducers/avatarSlice";
 
 export const getDefaultGameVersion = async() => {
     const response = await axios.get('https://api.maplestory.net/version/default');
@@ -22,7 +23,7 @@ export const getEquipmentCategory = async(): Promise<ClosetState> =>  {
         // Default: 0
         // The page of the search result to retrieve
 
-        maxEntries: 1,
+        maxEntries: 2,
         // integer
         // Default: 100
         // The maximum number of entries to return per page of the search result
@@ -44,7 +45,7 @@ export const getEquipmentCategory = async(): Promise<ClosetState> =>  {
 
     const response = await axios.get(`https://api.maplestory.net/items/`, { params: queryParams });
     if(response.status != 200) {
-        console.log("Request to Maplestory API failed.");
+        console.log("Request to get equipment info failed.");
         // return closetState
     }
 
@@ -64,4 +65,21 @@ export const getEquipmentCategory = async(): Promise<ClosetState> =>  {
     }
 
     return newClosetState
+}
+
+
+export const renderAvatar = async(avatar: AvatarState): Promise<any> => {
+    // Convert the equip objects to the equip itemIds
+    const reqBody = avatar
+    reqBody.itemIds.map((equip) => equip.itemId)
+
+    const response = await axios.post(`https://api.maplestory.net/character/render`);
+    if(response.status != 200) {
+        console.log("Request to render avatar failed.");
+    }
+
+    const rawImage = response.data;
+
+    console.log(rawImage);
+
 }
