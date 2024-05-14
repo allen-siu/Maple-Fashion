@@ -1,12 +1,12 @@
-import { Equip } from "../store/storeTypes";
+import { Cosmetic } from "../store/storeTypes";
 
 
-export default function EquipIcon(equip: Equip) {
+export default function CosmeticIcon(cosmetic: Cosmetic) {
 
     return (
         <div>
-            <img src={equip.icon} alt="Image" />
-            <p>{equip.name}</p>
+            <img src={cosmetic.icon} alt="Image" />
+            <p>{cosmetic.name}</p>
         </div>
     );
 }

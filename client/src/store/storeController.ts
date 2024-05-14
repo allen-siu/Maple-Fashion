@@ -1,7 +1,5 @@
-// import store from "./store";
 import axios from "axios"
-import { Equip, EquipCategory } from "./storeTypes";
-import { ClosetState } from "./reducers/closetSlice";
+import { Equip, CosmeticCategory, Face, Hair } from "./storeTypes";
 import { AvatarState } from "./reducers/avatarSlice";
 
 export const getDefaultGameVersion = async() => {
@@ -16,37 +14,27 @@ export const getDefaultGameVersion = async() => {
 }
 
 
-export const getEquipmentCategory = async(): Promise<ClosetState> =>  {
-    const queryParams = {
-        // page: 0,	
-        // integer
-        // Default: 0
-        // The page of the search result to retrieve
-
-        maxEntries: 2,
-        // integer
-        // Default: 100
-        // The maximum number of entries to return per page of the search result
-
-
-        // overallCategory: "",
-        // string
-
-        // category: "",
-        // string
-
-        subcategory: "Hat",
-        cash: true,
-
-        // gender: ""
-        // Default: "male"
-        // Enum: "male" "female" "any"
+export const getEquipmentCategory = async(equipCategory: CosmeticCategory): Promise<Equip[]> =>  {
+    let queryParams = {}
+    if (equipCategory == CosmeticCategory.WEAPON) {
+        queryParams = {
+            category: equipCategory,
+            // maxEntries: 10000,
+            cash: true
+        }
+    }
+    else {
+        queryParams = {
+            subcategory: equipCategory,
+            // maxEntries: 10000,
+            cash: true
+        }
     }
 
     const response = await axios.get(`https://api.maplestory.net/items/`, { params: queryParams });
     if(response.status != 200) {
         console.log("Request to get equipment info failed.");
-        // return closetState
+        return []
     }
 
     const equips = response.data.result
@@ -55,16 +43,64 @@ export const getEquipmentCategory = async(): Promise<ClosetState> =>  {
             name: item.name,
             subcategory: item.subcategory,
             itemId: item.itemId,
-            icon: `https://api.maplestory.net/item/${item.itemId}/icon`
+            icon: `https://api.maplestory.net/item/${item.itemId}/icon`,
+            gender: item.requiredStats.gender
         }
     })
 
-    const newClosetState: ClosetState = {
-        category: EquipCategory.HAT,
-        equipsDisplayed: filteredEquips
+    return filteredEquips
+}
+
+
+export const getHairstyles = async(): Promise<Hair[]> => {
+    let queryParams = {
+        // maxEntries: 11666,
+        cash: true
     }
 
-    return newClosetState
+    const response = await axios.get(`https://api.maplestory.net/hairs`, { params: queryParams });
+    if(response.status != 200) {
+        console.log("Request to get hairstyle info failed.");
+        return []
+    }
+
+    const hairs = response.data.result
+    const filteredHairs: Hair[] = hairs.map((hair: any) => {
+        return {
+            name: hair.name,
+            hairId: hair.hairId,
+            icon: `https://api.maplestory.net/hair/${hair.hairId}/icon`,
+            gender: hair.requiredStats.gender
+        }
+    })
+
+    return filteredHairs
+}
+
+
+export const getFaces = async(): Promise<Face[]> => {
+    let queryParams = {
+        // maxEntries: 7952,
+        cash: true
+    }
+
+    const response = await axios.get(`https://api.maplestory.net/faces`, { params: queryParams });
+    if(response.status != 200) {
+        console.log("Request to get face info failed.");
+        return []
+    }
+
+    const faces = response.data.result
+    const filteredFaces: Face[] = faces.map((face: any) => {
+        return {
+            name: face.name,
+            faceId: face.faceId,
+            icon: `https://api.maplestory.net/face/${face.faceId}/icon`,
+            gender: face.requiredStats.gender
+        }
+    })
+
+    return filteredFaces;
 }
 
 

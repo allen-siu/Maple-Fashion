@@ -1,26 +1,50 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EquipCategory, Equip } from "../storeTypes"
+import { CosmeticCategory, Equip, Inventory, Hair, Face, Cosmetic } from "../storeTypes"
 
 export interface ClosetState {
-    category: EquipCategory,
-    equipsDisplayed: Equip[]
+    currentCategory: CosmeticCategory,
+    equipInventory: Inventory
 }
 
 const closetInitialState: ClosetState = {
-    category: EquipCategory.HAT,
-    equipsDisplayed: []
+    currentCategory: CosmeticCategory.HAIR,
+    equipInventory: {
+        [CosmeticCategory.HAIR]: [],
+        [CosmeticCategory.FACE]: [],
+        [CosmeticCategory.WEAPON]: [],
+        [CosmeticCategory.HAT]: [],
+        [CosmeticCategory.TOP]: [],
+        [CosmeticCategory.BOTTOM]: [],
+        [CosmeticCategory.OVERALL]: [],
+        [CosmeticCategory.SHOES]: [],
+        [CosmeticCategory.CAPE]: [],
+        [CosmeticCategory.GLOVES]: [],
+        [CosmeticCategory.FACE_ACCESSORY]: [],
+        [CosmeticCategory.EYE_ACCESSORY]: [],
+        [CosmeticCategory.EARRINGS]: [],
+        [CosmeticCategory.RING]: []
+    }
+}
+
+export interface UpdatedClosetPayload {
+    category: CosmeticCategory,
+    cosmetics: Cosmetic[]
 }
 
 export const closetSlice = createSlice({
     name: "closet",
     initialState: closetInitialState,
     reducers: {
-        changeCategory: (state, action: PayloadAction<ClosetState>) => {
-            state.category = action.payload.category;
-            state.equipsDisplayed = action.payload.equipsDisplayed;
+        changeCategory: (state, action: PayloadAction<CosmeticCategory>) => {
+            state.currentCategory = action.payload;
+        },
+        updateInventory: (state, action: PayloadAction<UpdatedClosetPayload>) => {
+            const category = action.payload.category;
+            const cosmetics = action.payload.cosmetics;
+            state.equipInventory = {...state.equipInventory, [category]: cosmetics}
         }
     }
 });
-export const { changeCategory } = closetSlice.actions
+export const { changeCategory, updateInventory } = closetSlice.actions
 export default closetSlice.reducer;
 
