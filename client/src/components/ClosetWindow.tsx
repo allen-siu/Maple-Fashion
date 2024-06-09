@@ -3,18 +3,35 @@ import ClosetTab from "./ClosetTab"
 import { useSelector } from "react-redux"
 import { RootState } from "../store/store"
 import CosmeticIcon from "./EquipIcon"
+import { useEffect } from "react"
+import { getEquipmentCategory } from "../store/storeController"
+import { useDispatch } from "react-redux"
+import { UpdatedClosetPayload, updateInventory } from "../store/reducers/closetSlice"
 
 export default function ClosetWindow() {
+
+    const dispatch = useDispatch();
 
     const currentCategory: CosmeticCategory = useSelector((state: RootState) => state.closet.currentCategory)
     const inventory: Inventory = useSelector((state: RootState) => state.closet.equipInventory)
 
+    // On initial startup, load items for the initial category
+    useEffect(() => {
+        async function loadInitialCategory() {
+            const initialCosmetics: Equip[] = await getEquipmentCategory(currentCategory);
+            const initialInventory: UpdatedClosetPayload = {
+                category: currentCategory,
+                cosmetics: initialCosmetics
+            }
+            dispatch(updateInventory(initialInventory))
+        }
+        loadInitialCategory();
+    }, [])
+
     return (
         
-        <div className="md:flex">
-            <ul className="flex-column w-56 space-y space-y-0 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-0 mb-4 md:mb-0">
-                <ClosetTab tabName={CosmeticCategory.HAIR} />
-                <ClosetTab tabName={CosmeticCategory.FACE} />
+        <div className="md:flex w-3/5">
+            <ul className="flex-column w-56 space-y space-y-0 text-sm font-medium bg-gray-100 text-gray-500 dark:text-gray-400 md:me-0 mb-4 md:mb-0">
                 <ClosetTab tabName={CosmeticCategory.HAT} />
                 <ClosetTab tabName={CosmeticCategory.TOP} />
                 <ClosetTab tabName={CosmeticCategory.BOTTOM} />
@@ -26,9 +43,13 @@ export default function ClosetWindow() {
                 <ClosetTab tabName={CosmeticCategory.EYE_ACCESSORY} />
                 <ClosetTab tabName={CosmeticCategory.EARRINGS} />
                 <ClosetTab tabName={CosmeticCategory.RING} />
+                <ClosetTab tabName={CosmeticCategory.WEAPON} />
+                <ClosetTab tabName={CosmeticCategory.HAIR} />
+                <ClosetTab tabName={CosmeticCategory.FACE} />
 
             </ul>
-            <div className="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full">
+            <div className="w-full h-screen p-6 pl-6 pt-6 overflow-y-scroll
+                            grid md:grid-cols-8 gap-4">
                 {inventory[currentCategory].map((equip) => {
                     return <CosmeticIcon  {...equip} />;
                 })}

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CosmeticCategory, Equip, Inventory, Hair, Face, Cosmetic } from "../storeTypes"
+import { CosmeticCategory, Inventory, Cosmetic } from "../storeTypes"
 
 export interface ClosetState {
     currentCategory: CosmeticCategory,
@@ -7,7 +7,7 @@ export interface ClosetState {
 }
 
 const closetInitialState: ClosetState = {
-    currentCategory: CosmeticCategory.HAIR,
+    currentCategory: CosmeticCategory.HAT,
     equipInventory: {
         [CosmeticCategory.HAIR]: [],
         [CosmeticCategory.FACE]: [],

@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { Equip, CosmeticCategory, Face, Hair, Inventory, Cosmetic } from "../store/storeTypes";
+import { CosmeticCategory, Inventory, Cosmetic } from "../store/storeTypes";
 import { RootState } from "../store/store"
 import { useDispatch } from "react-redux";
-import { ClosetState, UpdatedClosetPayload, changeCategory, updateInventory } from "../store/reducers/closetSlice";
+import { UpdatedClosetPayload, changeCategory, updateInventory } from "../store/reducers/closetSlice";
 import { getEquipmentCategory, getFaces, getHairstyles } from "../store/storeController";
 
 interface TabName {
@@ -18,23 +18,22 @@ export default function ClosetTab({tabName}: TabName) {
     const selectCategory = async() => {
         // If the tab being selected doesn't have its' items loaded, load them
         if (inventory[tabName].length == 0) {
-            console.log("In here")
-            let laodedCategory: Cosmetic[];
+            let loadedCategory: Cosmetic[];
             switch (tabName) {
                 case CosmeticCategory.HAIR:
-                    laodedCategory = await getHairstyles();
+                    loadedCategory = await getHairstyles();
                     break;
                 case CosmeticCategory.FACE:
-                    laodedCategory = await getFaces();
+                    loadedCategory = await getFaces();
                     break;
                 default:
-                    laodedCategory = await getEquipmentCategory(tabName);
+                    loadedCategory = await getEquipmentCategory(tabName);
                     break;
             }
 
             const inventoryUpdateInfo: UpdatedClosetPayload = {
                 category: tabName,
-                cosmetics: laodedCategory
+                cosmetics: loadedCategory
             }
             dispatch(updateInventory(inventoryUpdateInfo))
         }
@@ -58,7 +57,7 @@ export default function ClosetTab({tabName}: TabName) {
     else {
         return (
             <li>
-                <div onClick={selectCategory} className="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
+                <div onClick={selectCategory} className="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-100 hover:bg-gray-200 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
                     <svg className="w-4 h-4 me-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                         <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"/>
                     </svg>
