@@ -1,4 +1,4 @@
-import { Equip, CosmeticCategory, Inventory } from "../store/storeTypes"
+import { Equip, CosmeticCategory, Inventory, Cosmetic } from "../store/storeTypes"
 import ClosetTab from "./ClosetTab"
 import { useSelector } from "react-redux"
 import { RootState } from "../store/store"
@@ -50,8 +50,8 @@ export default function ClosetWindow() {
             </ul>
             <div className="w-full h-screen p-6 pl-6 pt-6 overflow-y-scroll
                             grid md:grid-cols-8 gap-4">
-                {inventory[currentCategory].map((equip) => {
-                    return <CosmeticIcon  {...equip} />;
+                {inventory[currentCategory as keyof Inventory].map((cosmetic: Cosmetic) => {
+                    return <CosmeticIcon  {...cosmetic} />;
                 })}
             </div>
         </div>

@@ -17,7 +17,7 @@ export default function ClosetTab({tabName}: TabName) {
 
     const selectCategory = async() => {
         // If the tab being selected doesn't have its' items loaded, load them
-        if (inventory[tabName].length == 0) {
+        if (inventory[tabName as keyof Inventory].length == 0) {
             let loadedCategory: Cosmetic[];
             switch (tabName) {
                 case CosmeticCategory.HAIR:

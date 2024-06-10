@@ -1,5 +1,4 @@
 import axios from "axios"
-import { Buffer } from "buffer";
 import { Equip, CosmeticCategory, Face, Hair } from "./storeTypes";
 import { AvatarState } from "./reducers/avatarSlice";
 
@@ -46,7 +45,8 @@ export const getEquipmentCategory = async(equipCategory: CosmeticCategory): Prom
             subcategory: item.subcategory,
             itemId: item.itemId,
             icon: `https://api.maplestory.net/item/${item.itemId}/icon`,
-            gender: item.requiredStats.gender
+            gender: item.requiredStats.gender,
+            cosmeticCategory: equipCategory
         }
     })
 
@@ -73,7 +73,8 @@ export const getHairstyles = async(): Promise<Hair[]> => {
             name: hair.name,
             hairId: hair.hairId,
             icon: `https://api.maplestory.net/hair/${hair.hairId}/icon`,
-            gender: hair.requiredStats.gender
+            gender: hair.requiredStats.gender,
+            cosmeticCategory: CosmeticCategory.HAIR
         }
     })
 
@@ -100,7 +101,8 @@ export const getFaces = async(): Promise<Face[]> => {
             name: face.name,
             faceId: face.faceId,
             icon: `https://api.maplestory.net/face/${face.faceId}/icon`,
-            gender: face.requiredStats.gender
+            gender: face.requiredStats.gender,
+            cosmeticCategory: CosmeticCategory.FACE
         }
     })
 
@@ -109,9 +111,57 @@ export const getFaces = async(): Promise<Face[]> => {
 
 
 export const renderAvatar = async(avatar: AvatarState): Promise<any> => {
-    // Convert the equip objects to the equip itemIds
-    const reqBody = avatar
-    reqBody.itemIds.map((equip) => equip.itemId)
+    // Take avatar state and create json request body format
+    // const avatarInitialState: AvatarState = {
+//     "skin": Skin.LIGHT,
+//     "faceId": 20000,
+//     "hairId": 30000,
+//     "pose": "standingOneHanded",    //
+//     "poseFrame": 1,                 //
+//     "faceEmote": "default",         //  These values typically won't be changed
+//     "faceFrame": 0,                 //
+//     "ears": "humanEars",            //
+//     "itemIds": [],
+//     "effectFrame": 0                //  
+// }
+    const skin = avatar[CosmeticCategory.SKIN]
+
+    const face = avatar[CosmeticCategory.FACE]
+    let faceId = 20000
+    if (face) { faceId = face.faceId }
+
+    const hair = avatar[CosmeticCategory.HAIR]
+    let hairId = 30000
+    if (hair) { hairId = hair.hairId }
+
+    const items = []
+    for (const cosmeticCategory in avatar) {
+        if (cosmeticCategory == CosmeticCategory.SKIN 
+            || cosmeticCategory == CosmeticCategory.HAIR
+            || cosmeticCategory == CosmeticCategory.FACE) {
+            continue;
+        }
+
+        if (avatar.hasOwnProperty(cosmeticCategory)) {
+            const cosmetic = avatar[cosmeticCategory as keyof AvatarState];
+            if (cosmetic) {
+                items.push((cosmetic as Equip).itemId)
+            }
+        }
+    }
+
+    const reqBody = {
+        "skin": skin,
+        "faceId": faceId,
+        "hairId": hairId,
+        "pose": "standingOneHanded",    //
+        "poseFrame": 1,                 //
+        "faceEmote": "default",         //  These values typically won't be changed
+        "faceFrame": 0,                 //
+        "ears": "humanEars",            //
+        "effectFrame": 0,               //  
+        "itemIds": items
+    }
 
     try {
         const response = await axios.post(`https://api.maplestory.net/character/render`, reqBody, {

@@ -1,4 +1,5 @@
 export enum CosmeticCategory {
+    SKIN = "Skin",
     HAIR = "Hair",
     FACE = "Face",
     WEAPON = "Weapon",
@@ -19,6 +20,7 @@ export interface Cosmetic {
     name: string,
     icon: string,
     gender: string
+    cosmeticCategory: CosmeticCategory
 }
 
 export interface Equip extends Cosmetic {

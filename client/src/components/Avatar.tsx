@@ -18,7 +18,7 @@ export default function Avatar() {
 
 
     return (
-        <div className="w-full h-full flex justify-center items-center">
+        <div className="w-full h-full flex justify-center items-center justify">
             <img className=" w-1/4" src={avatarImageSrc} />
         </div>
     )
