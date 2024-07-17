@@ -1,4 +1,6 @@
+import { useDispatch } from "react-redux";
 import { Cosmetic } from "../store/storeTypes";
+import { removeEquip } from "../store/reducers/avatarSlice";
 
 interface WardrobePieceProp {
     piece: Cosmetic | null
@@ -7,10 +9,20 @@ interface WardrobePieceProp {
 
 export default function WardrobePiece({piece}: WardrobePieceProp) {
 
+    const dispatch = useDispatch();
+    const callRemoveEquip = () => {
+        if (piece) {
+            dispatch(removeEquip(piece.cosmeticCategory))
+        }
+    }
+
     let itemCard: any = ""
     if (piece != null) {
         itemCard = (
-            <div className="flex items-center p-4 border rounded-lg shadow-md max-w-md hover:bg-gray-300">
+            <div 
+                className="flex items-center p-4 border rounded-lg shadow-md max-w-md hover:bg-gray-300"
+                onClick={callRemoveEquip}
+            >
                 <div className="flex items-center">
                     <div className="flex-shrink-0">
                         <img className="w-16 h-16 object-cover rounded-md" src={piece.icon} />

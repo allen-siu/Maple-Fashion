@@ -28,7 +28,7 @@ import { CosmeticCategory, Equip, Face, Hair, Skin } from "../storeTypes"
 // }
 
 export interface AvatarState {
-    [CosmeticCategory.SKIN]: Skin,
+    [CosmeticCategory.SKIN]: Skin | null,
     [CosmeticCategory.HAIR]: Hair | null,
     [CosmeticCategory.FACE]: Face | null,
     [CosmeticCategory.WEAPON]: Equip | null,
@@ -68,6 +68,9 @@ export const avatarSlice = createSlice({
     name: "avatar",
     initialState: avatarInitialState,
     reducers: {
+        removeEquip: (state, action: PayloadAction<CosmeticCategory>) => {
+            state[action.payload] = null
+        },
         changeSkin: (state, action: PayloadAction<Skin>) => {
             state[CosmeticCategory.SKIN] = action.payload
         },
@@ -78,7 +81,6 @@ export const avatarSlice = createSlice({
             state[CosmeticCategory.HAIR] = action.payload
         },
         changeWeapon: (state, action: PayloadAction<Equip>) => {
-            console.log("HELLO")
             state[CosmeticCategory.WEAPON] = action.payload
         },
         changeHat: (state, action: PayloadAction<Equip>) => {
@@ -122,6 +124,6 @@ export const avatarSlice = createSlice({
 });
 export const { changeSkin, changeFace, changeHair, changeHat, changeTop, changeBottom,
                 changeOverall, changeShoes, changeCape, changeGloves, changeFaceAccessory,
-                changeEyeAccessory, changeEarrings,changeRing, changeWeapon } = avatarSlice.actions
+                changeEyeAccessory, changeEarrings,changeRing, changeWeapon, removeEquip } = avatarSlice.actions
 export default avatarSlice.reducer;
 
