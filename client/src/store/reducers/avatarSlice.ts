@@ -78,6 +78,7 @@ export const avatarSlice = createSlice({
             state[CosmeticCategory.HAIR] = action.payload
         },
         changeWeapon: (state, action: PayloadAction<Equip>) => {
+            console.log("HELLO")
             state[CosmeticCategory.WEAPON] = action.payload
         },
         changeHat: (state, action: PayloadAction<Equip>) => {
@@ -121,6 +122,6 @@ export const avatarSlice = createSlice({
 });
 export const { changeSkin, changeFace, changeHair, changeHat, changeTop, changeBottom,
                 changeOverall, changeShoes, changeCape, changeGloves, changeFaceAccessory,
-                changeEyeAccessory, changeEarrings,changeRing } = avatarSlice.actions
+                changeEyeAccessory, changeEarrings,changeRing, changeWeapon } = avatarSlice.actions
 export default avatarSlice.reducer;
 
