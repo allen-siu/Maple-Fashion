@@ -31,7 +31,7 @@ export default function ClosetWindow() {
     return (
         
         <div className="md:flex w-3/5">
-            <ul className="flex-column w-56 space-y space-y-0 text-sm font-medium bg-gray-100 text-gray-500 dark:text-gray-400 md:me-0 mb-4 md:mb-0">
+            <ul className="flex-column w-60 space-y-0 text-sm font-medium bg-gray-100 text-gray-500 dark:text-gray-400 md:me-0 mb-4 md:mb-0">
                 <ClosetTab tabName={CosmeticCategory.HAT} />
                 <ClosetTab tabName={CosmeticCategory.TOP} />
                 <ClosetTab tabName={CosmeticCategory.BOTTOM} />
@@ -48,8 +48,9 @@ export default function ClosetWindow() {
                 <ClosetTab tabName={CosmeticCategory.FACE} />
 
             </ul>
-            <div className="w-full h-screen p-6 pl-6 pt-6 overflow-y-scroll
-                            grid md:grid-cols-8 gap-4">
+
+            <div className="w-full p-6 pl-6 pt-6 overflow-y-scroll
+                            grid md:grid-cols-7 gap-4">
                 {inventory[currentCategory as keyof Inventory].map((cosmetic: Cosmetic) => {
                     return <CosmeticIcon  {...cosmetic} />;
                 })}
