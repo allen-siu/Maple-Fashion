@@ -1,6 +1,18 @@
+import { useSelector } from "react-redux"
+import { saveAvatar } from "../store/storeController"
+import { RootState } from "../store/store"
+import { AvatarState } from "../store/reducers/avatarSlice"
 
 
 export default function HeaderBar() {
+
+    const avatar: AvatarState = useSelector((state: RootState) => state.avatar)
+
+    const uploadAvatar = () => {
+        const name = 'Test Name'
+        saveAvatar(name, avatar)
+    }
+
     return (
         <div className="h-[72px] ">
             <header className="bg-orange-700 text-white p-4 flex justify-between items-center">
@@ -19,6 +31,11 @@ export default function HeaderBar() {
                     </div>
                 </div>
                 <div className="flex items-center space-x-4">
+
+                    <button onClick={uploadAvatar}>
+                        Click here
+                    </button>
+
                     <button className="w-10 h-10 bg-gray-500 rounded-full flex items-center justify-center">
                     {/* Profile Icon Placeholder */}
                     <span className="text-xl font-bold">P</span>

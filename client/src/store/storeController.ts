@@ -2,6 +2,11 @@ import axios from "axios"
 import { Equip, CosmeticCategory, Face, Hair } from "./storeTypes";
 import { AvatarState } from "./reducers/avatarSlice";
 
+const PROTOCOL = 'http'
+const HOST = 'localhost'
+const PORT = 8080
+
+
 export const getDefaultGameVersion = async() => {
     const response = await axios.get('https://api.maplestory.net/version/default');
     if(response.status != 200) {
@@ -199,3 +204,38 @@ export const renderAvatar = async(avatar: AvatarState): Promise<any> => {
     }
 }
 
+
+export const saveAvatar = async(name: string, avatar: AvatarState) => {
+    const reqBody = {
+        name: name,
+        [CosmeticCategory.SKIN]: avatar.Skin,
+        [CosmeticCategory.HAIR]: avatar.Hair,
+        [CosmeticCategory.FACE]: avatar.Face,
+        [CosmeticCategory.WEAPON]: avatar.Weapon,
+        [CosmeticCategory.HAT]: avatar.Hat,
+        [CosmeticCategory.TOP]: avatar.Top,
+        [CosmeticCategory.BOTTOM]: avatar.Bottom,
+        [CosmeticCategory.OVERALL]: avatar.Overall,
+        [CosmeticCategory.SHOES]: avatar.Shoes,
+        [CosmeticCategory.CAPE]: avatar.Cape,
+        [CosmeticCategory.GLOVES]: avatar.Glove,
+        [CosmeticCategory.FACE_ACCESSORY]: avatar["Face Accessory"],
+        [CosmeticCategory.EYE_ACCESSORY]: avatar["Eye Decoration"],
+        [CosmeticCategory.EARRINGS]: avatar.Earrings,
+        [CosmeticCategory.RING]: avatar.Ring
+    }
+
+    try {
+        const response = await axios.post(`${PROTOCOL}://${HOST}:${PORT}/api/uploadAvatar`, reqBody)
+        if (response.status != 200) {
+            console.log('Failed to save avatar.')
+            return response.statusText
+        }
+        console.log('Successfully saved avatar.')
+        return response.statusText
+    }
+    catch(e) {
+        console.log(e)
+        return 'An error occurred while trying to save.'
+    }
+}
