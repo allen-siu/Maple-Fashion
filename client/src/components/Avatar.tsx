@@ -1,7 +1,7 @@
-import { RootState } from "../store/store";
+import { RootState } from "../store/store/store";
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux";
-import { renderAvatar } from "../store/storeController";
+import { renderAvatar } from "../store/store/storeController";
 
 export default function Avatar() {
     const avatar = useSelector((state: RootState) => state.avatar)

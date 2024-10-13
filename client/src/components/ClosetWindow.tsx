@@ -1,10 +1,10 @@
-import { Equip, CosmeticCategory, Inventory, Cosmetic } from "../store/storeTypes"
+import { Equip, CosmeticCategory, Inventory, Cosmetic } from "../store/store/storeTypes"
 import ClosetTab from "./ClosetTab"
 import { useSelector } from "react-redux"
-import { RootState } from "../store/store"
+import { RootState } from "../store/store/store"
 import CosmeticIcon from "./EquipIcon"
 import { useEffect } from "react"
-import { getEquipmentCategory } from "../store/storeController"
+import { getEquipmentCategory } from "../store/store/storeController"
 import { useDispatch } from "react-redux"
 import { UpdatedClosetPayload, updateInventory } from "../store/store/reducers/closetSlice"
 
