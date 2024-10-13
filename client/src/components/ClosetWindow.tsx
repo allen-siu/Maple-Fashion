@@ -6,7 +6,7 @@ import CosmeticIcon from "./EquipIcon"
 import { useEffect } from "react"
 import { getEquipmentCategory } from "../store/storeController"
 import { useDispatch } from "react-redux"
-import { UpdatedClosetPayload, updateInventory } from "../store/reducers/closetSlice"
+import { UpdatedClosetPayload, updateInventory } from "../store/store/reducers/closetSlice"
 
 export default function ClosetWindow() {
 

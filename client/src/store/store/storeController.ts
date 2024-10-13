@@ -25,14 +25,16 @@ export const getEquipmentCategory = async(equipCategory: CosmeticCategory): Prom
         queryParams = {
             category: equipCategory,
             // maxEntries: 10000,
-            cash: true
+            cash: true,
+            // gender: 'female'
         }
     }
     else {
         queryParams = {
             subcategory: equipCategory,
             // maxEntries: 10000,
-            cash: true
+            cash: true,
+            // gender: 'female'
         }
     }
 
@@ -62,7 +64,9 @@ export const getEquipmentCategory = async(equipCategory: CosmeticCategory): Prom
 export const getHairstyles = async(): Promise<Hair[]> => {
     let queryParams = {
         // maxEntries: 11666,
-        cash: true
+        // maxEntries: 400,
+        cash: true,
+        gender: 'any'
     }
 
     const response = await axios.get(`https://api.maplestory.net/hairs`, { params: queryParams });
@@ -90,7 +94,8 @@ export const getHairstyles = async(): Promise<Hair[]> => {
 export const getFaces = async(): Promise<Face[]> => {
     let queryParams = {
         // maxEntries: 7952,
-        cash: true
+        cash: true,
+        gender: 'any'
     }
 
     const response = await axios.get(`https://api.maplestory.net/faces`, { params: queryParams });

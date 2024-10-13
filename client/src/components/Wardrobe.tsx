@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
-import { RootState } from "../store/store"
-import { AvatarState } from "../store/reducers/avatarSlice"
+import { RootState } from "../store/store/store"
+import { AvatarState } from "../store/store/reducers/avatarSlice"
 import WardrobePiece from "./WardrobePiece"
 
 

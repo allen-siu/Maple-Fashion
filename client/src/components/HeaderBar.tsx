@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
-import { saveAvatar } from "../store/storeController"
-import { RootState } from "../store/store"
-import { AvatarState } from "../store/reducers/avatarSlice"
+import { saveAvatar } from "../store/store/storeController"
+import { RootState } from "../store/store/store"
+import { AvatarState } from "../store/store/reducers/avatarSlice"
 
 
 export default function HeaderBar() {
@@ -15,7 +15,7 @@ export default function HeaderBar() {
 
     return (
         <div className="h-[72px] ">
-            <header className="bg-orange-700 text-white p-4 flex justify-between items-center">
+            <header className="bg-red-400 text-white p-4 flex justify-between items-center">
                 <div className="md:flex w-3/5">
                     <div className=" w-48 h-10 md:me-0 mb-4 md:mb-0 flex items-center justify-center">
                         

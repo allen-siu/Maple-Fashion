@@ -1,9 +1,10 @@
-import mongoose, { mongo, Mongoose, ObjectId } from "mongoose";
+import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 interface User {
     username: string,
-    published_avatars: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Avatar'}]
+    password: string
+    published_avatars: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Avatar' }]
 }
 
 const userSchema = new Schema<User>({
@@ -11,10 +12,14 @@ const userSchema = new Schema<User>({
         type: String,
         required: true
     },
-    published_avatars: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Avatar' }],
+    password: {
+        type: String,
         required: true
-    }
+    },
+    published_avatars: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Avatar'
+    }]
 });
 
 const User = mongoose.model('User', userSchema);

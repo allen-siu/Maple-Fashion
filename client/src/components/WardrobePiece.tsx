@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Cosmetic } from "../store/storeTypes";
-import { removeEquip } from "../store/reducers/avatarSlice";
+import { removeEquip } from "../store/store/reducers/avatarSlice";
 
 interface WardrobePieceProp {
     piece: Cosmetic | null

@@ -2,8 +2,9 @@ import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import api from './routes/api';
 import cors from 'cors';
+import authRouter from './routes/auth';
+import apiRouter from './routes/api';
 
 dotenv.config({ path: path.join(__dirname, '../.env') })
 
@@ -23,7 +24,8 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 app.use(cors())
 
-app.use('/api', api)
+app.use('/api', apiRouter)
+app.use('/auth', authRouter)
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`)

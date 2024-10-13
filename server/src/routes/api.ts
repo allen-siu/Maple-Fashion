@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { uploadAvatar } from "../controllers/avatarController";
 
-const api = Router();
+const apiRouter = Router();
 
-api.post('/', () => {
+apiRouter.post('/', () => {
     console.log('Hello')
 })
 
-api.post('/uploadAvatar', uploadAvatar)
+apiRouter.post('/uploadAvatar', uploadAvatar)
 
 
-export default api;
+export default apiRouter;
