@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CosmeticCategory, Equip, Face, Hair, Skin } from "../storeTypes"
+import { CosmeticCategory, Equip, Face, Hair, Skin } from "../store/storeTypes"
 
 // export interface AvatarState {
 //     skin: string,

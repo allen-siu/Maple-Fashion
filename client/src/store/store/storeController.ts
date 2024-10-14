@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Equip, CosmeticCategory, Face, Hair } from "./storeTypes";
-import { AvatarState } from "./reducers/avatarSlice";
+import { AvatarState } from "../reducers/avatarSlice";
 
 const PROTOCOL = 'http'
 const HOST = 'localhost'

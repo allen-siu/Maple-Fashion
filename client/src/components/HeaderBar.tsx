@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { saveAvatar } from "../store/store/storeController"
 import { RootState } from "../store/store/store"
-import { AvatarState } from "../store/store/reducers/avatarSlice"
+import { AvatarState } from "../store/reducers/avatarSlice"
 
 
 export default function HeaderBar() {

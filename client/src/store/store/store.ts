@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import closetReducer from './reducers/closetSlice';
-import avatarReducer from './reducers/avatarSlice';
+import avatarReducer from '../reducers/avatarSlice';
 
 
 const store = configureStore({

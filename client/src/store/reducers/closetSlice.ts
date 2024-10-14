@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CosmeticCategory, Inventory, Cosmetic } from "../storeTypes"
+import { CosmeticCategory, Inventory, Cosmetic } from "../store/storeTypes"
 
 export interface ClosetState {
     currentCategory: CosmeticCategory,

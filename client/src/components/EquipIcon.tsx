@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Cosmetic, CosmeticCategory, Equip, Face, Hair } from "../store/store/storeTypes";
-import { changeBottom, changeCape, changeEarrings, changeEyeAccessory, changeFace, changeFaceAccessory, changeGloves, changeHair, changeHat, changeOverall, changeRing, changeShoes, changeTop, changeWeapon } from "../store/store/reducers/avatarSlice";
+import { changeBottom, changeCape, changeEarrings, changeEyeAccessory, changeFace, changeFaceAccessory, changeGloves, changeHair, changeHat, changeOverall, changeRing, changeShoes, changeTop, changeWeapon } from "../store/reducers/avatarSlice";
 
 
 export default function CosmeticIcon(cosmetic: Cosmetic) {
