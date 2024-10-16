@@ -2,15 +2,22 @@ import { useSelector } from "react-redux"
 import { saveAvatar } from "../store/store/storeController"
 import { RootState } from "../store/store/store"
 import { AvatarState } from "../store/reducers/avatarSlice"
+import { useDispatch } from "react-redux"
+import { changeModal, ModalType } from "../store/reducers/modalSlice"
 
 
 export default function HeaderBar() {
 
+    const dispatch = useDispatch()
     const avatar: AvatarState = useSelector((state: RootState) => state.avatar)
 
     const uploadAvatar = () => {
         const name = 'Test Name'
         saveAvatar(name, avatar)
+    }
+
+    const openLogin = () => {
+        dispatch(changeModal(ModalType.LOGIN))
     }
 
     return (
@@ -32,7 +39,7 @@ export default function HeaderBar() {
                 </div>
                 <div className="flex items-center space-x-4">
 
-                    <button onClick={uploadAvatar}>
+                    <button onClick={openLogin}>
                         Click here
                     </button>
 

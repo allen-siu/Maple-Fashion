@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { CosmeticCategory, Inventory, Cosmetic } from "../store/store/storeTypes";
 import { RootState } from "../store/store/store"
 import { useDispatch } from "react-redux";
-import { UpdatedClosetPayload, changeCategory, updateInventory } from "../store/store/reducers/closetSlice";
+import { UpdatedClosetPayload, changeCategory, updateInventory } from "../store/reducers/closetSlice";
 import { getEquipmentCategory, getFaces, getHairstyles } from "../store/store/storeController";
 
 interface TabName {

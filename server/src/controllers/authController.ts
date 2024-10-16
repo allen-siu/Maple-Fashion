@@ -13,13 +13,15 @@ export const register = async (req: Request, res: Response) => {
 
     if (!username || !password) {
         const errorMessage = 'Missing required fields.'
+        console.log(errorMessage)
         return res.status(400).json({ errorMessage: errorMessage })
     }
 
     try {
-        const existingUser = await User.findOne({ where: { username } })
+        const existingUser = await User.findOne({ username: username })
         if (existingUser) {
             const errorMessage = 'An account with this username already exists.'
+            console.log(errorMessage)
             return res.status(409).json({ errorMessage: errorMessage })
         }
 
@@ -34,11 +36,13 @@ export const register = async (req: Request, res: Response) => {
         })
 
         const successMessage = 'Successfully registered account.'
+        console.log(successMessage)
         return res.status(200).json({ successMessage: successMessage })
     }
     catch (error) {
         console.log(error)
         const errorMessage = 'Internal server error when creating account.'
+        console.log(errorMessage)
         return res.status(500).json({ errorMessage: errorMessage })
     }
 }
@@ -49,19 +53,22 @@ export const login = async (req: Request, res: Response) => {
 
     if (!username || !password) {
         const errorMessage = 'Missing required fields.'
+        console.log(errorMessage)
         return res.status(401).json({ errorMessage: errorMessage })
     }
 
     try {
-        const user = await User.findOne({ where: { username }})
+        const user = await User.findOne({ username: username })
         if (!user) {
             const errorMessage = 'Incorrect username or password.'
+            console.log(errorMessage)
             return res.status(400).json({ errorMessage: errorMessage })
         }
 
         const correctPassword = await bcrypt.compare(password, user.password)
         if (!correctPassword) {
             const errorMessage = 'Incorrect username or password.'
+            console.log(errorMessage)
             return res.status(400).json({ errorMessage: errorMessage })
         }
 
@@ -71,6 +78,7 @@ export const login = async (req: Request, res: Response) => {
         )
         
         const successMessage = 'Successfully logged in.'
+        console.log(successMessage)
         return res.status(200).json({ 
             successMessage: successMessage, 
             token: token,
@@ -80,6 +88,7 @@ export const login = async (req: Request, res: Response) => {
     catch(error) {
         console.log(error)
         const errorMessage = 'Internal server error when logging in.'
+        console.log(errorMessage)
         return res.status(500).json({ errorMessage: errorMessage })
     }
 }
