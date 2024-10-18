@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import authRouter from './routes/auth';
 import apiRouter from './routes/api';
+import cookieParser from 'cookie-parser';
 
 dotenv.config({ path: path.join(__dirname, '../.env') })
 
@@ -22,7 +23,11 @@ db.once('open', () => {console.log("Connected to Mongoose")});
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client')));
 
-app.use(cors())
+// app.use(cookieParser())
+app.use(cors({
+    // origin: ['http://localhost:5173'],
+    // credentials: true
+}))
 
 app.use('/api', apiRouter)
 app.use('/auth', authRouter)

@@ -9,12 +9,12 @@ dotenv.config({ path: path.join(__dirname, '../.env') })
 
 
 export const register = async (req: Request, res: Response) => {
-    const { username, password } = req.body;
+    const { username, password, confirmPassword } = req.body;
 
-    if (!username || !password) {
+    if (!username || !password || !confirmPassword) {
         const errorMessage = 'Missing required fields.'
         console.log(errorMessage)
-        return res.status(400).json({ errorMessage: errorMessage })
+        return res.status(401).json({ errorMessage: errorMessage })
     }
 
     try {
@@ -23,6 +23,12 @@ export const register = async (req: Request, res: Response) => {
             const errorMessage = 'An account with this username already exists.'
             console.log(errorMessage)
             return res.status(409).json({ errorMessage: errorMessage })
+        }
+
+        if (password !== confirmPassword) {
+            const errorMessage = 'Passwords do not match.'
+            console.log(errorMessage)
+            return res.status(401).json({ errorMessage: errorMessage })
         }
 
         const saltRounds = 10;
@@ -72,8 +78,10 @@ export const login = async (req: Request, res: Response) => {
             return res.status(400).json({ errorMessage: errorMessage })
         }
 
-        const token = jwt.sign(
-            { username: username },
+        const token = jwt.sign({ 
+                exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                username: username 
+            },
             process.env.JWT_SECRET || '' 
         )
         
