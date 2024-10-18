@@ -4,6 +4,7 @@ import { RootState } from "../../store/store/store";
 import { changeModal, ModalType } from "../../store/reducers/modalSlice";
 import { useState } from "react";
 import { login } from "../../store/auth/authController";
+import useSignIn from "react-auth-kit/hooks/useSignIn";
 
 
 export default function LoginModal() {
@@ -14,6 +15,8 @@ export default function LoginModal() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+
+    const signIn = useSignIn()
 
 
     const openRegisterModal = () => {
@@ -26,8 +29,22 @@ export default function LoginModal() {
         document.body.style.overflow = "auto"; // Re-enable scrolling when modal is closed
     }
 
-    const handleLogin = () => {
-        login(username, password)
+    const handleLogin = async () => {
+        const data = await login(username, password)
+        console.log(data)
+        if (data.status == 200) {
+            const test = signIn({
+                auth: {
+                    token: data.token,
+                    type: 'Bearer'
+                },
+                userState: {
+                    username: data.username
+                }
+            })
+
+            console.log(test)
+        }
     }
 
     const isOpen = (currentModal == ModalType.LOGIN)
