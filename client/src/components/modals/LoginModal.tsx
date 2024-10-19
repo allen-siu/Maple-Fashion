@@ -31,19 +31,26 @@ export default function LoginModal() {
 
     const handleLogin = async () => {
         const data = await login(username, password)
-        console.log(data)
-        if (data.status == 200) {
-            const test = signIn({
-                auth: {
-                    token: data.token,
-                    type: 'Bearer'
-                },
-                userState: {
-                    username: data.username
-                }
-            })
+        if (data.status != 200) {
+            setErrorMessage(data.message)
+            return
+        }
 
-            console.log(test)
+        const loginSuccess = signIn({
+            auth: {
+                token: data.token,
+                type: 'Bearer'
+            },
+            userState: {
+                username: data.username
+            }
+        })
+
+        if (loginSuccess) {
+            setUsername('')
+            setPassword('')
+            setErrorMessage('')
+            dispatch(changeModal(ModalType.NONE))
         }
     }
 

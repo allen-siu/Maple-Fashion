@@ -1,25 +1,6 @@
-import { useSelector } from "react-redux"
-import { saveAvatar } from "../store/store/storeController"
-import { RootState } from "../store/store/store"
-import { AvatarState } from "../store/reducers/avatarSlice"
-import { useDispatch } from "react-redux"
-import { changeModal, ModalType } from "../store/reducers/modalSlice"
-
+import AccountOptions from "./AccountOptions";
 
 export default function HeaderBar() {
-
-    const dispatch = useDispatch()
-    const avatar: AvatarState = useSelector((state: RootState) => state.avatar)
-
-    const uploadAvatar = () => {
-        const name = 'Test Name'
-        saveAvatar(name, avatar)
-    }
-
-    const openLogin = () => {
-        dispatch(changeModal(ModalType.LOGIN))
-    }
-
     return (
         <div className="h-[72px] ">
             <header className="bg-red-400 text-white p-4 flex justify-between items-center">
@@ -37,17 +18,9 @@ export default function HeaderBar() {
                         />
                     </div>
                 </div>
-                <div className="flex items-center space-x-4">
+                
+                <AccountOptions />
 
-                    <button onClick={openLogin}>
-                        Click here
-                    </button>
-
-                    <button className="w-10 h-10 bg-gray-500 rounded-full flex items-center justify-center">
-                    {/* Profile Icon Placeholder */}
-                    <span className="text-xl font-bold">P</span>
-                    </button>
-                </div>
             </header>
         </div>
     )
